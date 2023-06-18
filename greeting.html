@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8">
+<style>
+
+body {
+  background-color: powderblue;
+  text-align: center;
+}
+h1 {
+  color: blue;
+  text-align: center;
+}
+h4 {
+  font-style: italic;
+}
+p {
+  text-align: center; 
+  color: red;
+}
+
+video {
+  margin-left: 50vw;
+  transform: translate(-50%);
+}
+
+.boxglow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 25px;
+  background: white;
+  color: #48abe0;
+  text-align: center;
+  border-radius: 5px;
+  cursor: pointer;  
+  box-shadow: 0 0 50px 15px #48abe0;
+}
+</style>
+
+	<title>Leave a short message for the bride and groom!</title>
+</head>
+<body>
+<h1>Record a short message for the bride and groom!</h1>
+
+<h4>If your web browser asks you to accept Camera and Microphone permissions, click &quot;Accept&quot;</h4>
+
+<p></p>
+
+<video class="boxglow" autoplay="" height="432" id="video" width="768"></video>
+
+<p><button id="captureBtn">Capture</button>
+
+    <script>
+        const video = document.getElementById('video');
+        const captureBtn = document.getElementById('captureBtn');
+
+        // Access the user's camera and microphone
+        navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+            .then(stream => {
+                // Display the video stream in the video element
+                video.srcObject = stream;
+            })
+            .catch(error => {
+                console.log('Error accessing media devices:', error);
+            });
+
+        // Capture video and audio and save it locally
+        captureBtn.addEventListener('click', () => {
+            const mediaStream = video.srcObject;
+            const mediaRecorder = new MediaRecorder(mediaStream);
+            const chunks = [];
+
+            // Start recording
+            mediaRecorder.start();
+
+            mediaRecorder.addEventListener('dataavailable', event => {
+                chunks.push(event.data);
+            });
+
+            mediaRecorder.addEventListener('stop', () => {
+                const blob = new Blob(chunks, { type: 'video/webm' });
+
+                // Create a temporary anchor element to save the video
+                const anchor = document.createElement('a');
+                anchor.href = URL.createObjectURL(blob);
+                anchor.download = 'captured-video.webm';
+                anchor.click();
+
+                // Cleanup
+                chunks.length = 0;
+                video.srcObject = null;
+                mediaStream.getTracks().forEach(track => track.stop());
+            });
+
+            // Stop recording after 5 seconds (adjust as needed)
+            setTimeout(() => {
+                mediaRecorder.stop();
+            }, 5000);
+        });
+    </script></p>
+</body>
+</html>
