@@ -1,0 +1,6 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/diazpkps/public_html/
+    - /bin/cp greeting.html $DEPLOYPATH
+    - /bin/cp -R images $DEPLOYPATH
