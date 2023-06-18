@@ -1,11 +1,9 @@
-# Weddinggreeting page
+# Wedding Greeting page
 A simple webpage that records no more than 30 seconds of a webcam feed and stores it local to the server.
 CSS and JS are embedded into html.
 
 A PoC has been made for the greeting page.
 test URL: https://diaz.world/greeting.html
-
-Currently it only saves locally and for about 5 seconds in .webm format.  
 
 ### Todo:
 - password protect the page
@@ -19,4 +17,4 @@ Currently it only saves locally and for about 5 seconds in .webm format.
 - make the actual page background more decorated. Nothing too fancy, but it should be more than a black box in a whitespace.
 
 ### Wishful thinking:
--Apply decorative frame to recording
+- Apply decorative frame to recording
